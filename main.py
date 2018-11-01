@@ -150,11 +150,21 @@ class Pages():
         self.page0btn.pack(side=Tk.LEFT, fill=Tk.BOTH, expand=1)   # hacia pagina de inicio
 """
 
-
+# datos
 i = 0
 a = []
 data = []
 nombres = []
+notas_sociales = []
+notas_espa_ol = []
+notas_mate = []
+
+clase= ['Sociales', 'Espa_ol', 'Matemanticas']
+prom_clase = []
+prom_sociales = 0
+prom_espa_ol = 0
+prom_mate = 0
+
 f = open('data.txt', 'r')
 for line in f.readlines():
     a = line.split()    
@@ -162,13 +172,30 @@ for line in f.readlines():
     data += [a[1:]]
     i += 1 
 
+for i in range(len(data)):
+    notas_sociales += [data[i][0]]
 
-print(str(data[0]))   
-# parametros y datos
+for i in range(len(data)):
+    notas_espa_ol += [data[i][1]]
+    
+for i in range(len(data)):
+    notas_mate += [data[i][2]]
 
-clase= ['Sociales', 'Espa_ol', 'Matemanticas']
+for i in range(len(data)):
+    prom_sociales += int(notas_sociales[i])
+    prom_espa_ol += int(notas_espa_ol[i])
+    prom_mate += int(notas_mate[i])
+prom_clase = [prom_sociales/len(data), prom_espa_ol/len(data), prom_mate/len(data)]
+
+
+print(notas_sociales)
+print(notas_espa_ol)    
+print(prom_clase)
+
+# Otros parametros
 ind = numpy.arange(len(data))  # the x locations for the groups
 width = .5
+
 
 # ventana
 root = Tk.Tk()
@@ -176,9 +203,9 @@ back = Tk.Frame(master=root, width=500, height=500, bg='black')
 
 
 # graficos de barras
-canvasS = Canvas(root, data, nombres, ind, width).canvas
-canvasE = Canvas(root, data2, nombres, ind, width).canvas
-canvas_clase = canvasS = Canvas(root, data3, clase, ind, width).canvas
+canvasS = Canvas(root, notas_sociales, nombres, ind, width).canvas
+canvasE = Canvas(root, notas_espa_ol, nombres, ind, width).canvas
+canvas_clase = Canvas(root, prom_clase, clase, ind, width).canvas
  
 
 canvas = [canvasS, canvasE, canvas_clase] 
