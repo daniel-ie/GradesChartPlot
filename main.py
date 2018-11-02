@@ -25,7 +25,7 @@ class Canvas():
         f = Figure(figsize=(5,4), dpi=100)     
         ax = f.add_subplot(111)
         
-        ax.set_xlabel("estudiantes")        
+        #ax.set_xlabel("estudiantes")        
         ax.set_ylabel("notas")
         ax.set_xticks(self.ind+self.width/2)
         ax.set_xticklabels(self.nombres) #
@@ -40,7 +40,9 @@ class Pages():
     def __init__(self, canvas):
         self.canvasS = canvas[0]
         self.canvasE = canvas[1]
-        self.canvas_clase = canvas[2]
+        self.canvasM = canvas[2]
+        self.canvasC = canvas[3]
+        self.canvas_clase = canvas[4]
 
         self.back = back
         self.page0btn = Tk.Button(master=self.back, text="Inicio", command=self.page0)
@@ -52,7 +54,7 @@ class Pages():
         self.page2btnM= Tk.Button(master=self.back, text="Matematicas", command=self.pageM)
         self.page2btnC = Tk.Button(master=self.back, text="Ciencias", command=self.pageC)
 
-    def page0(self):           # inicio
+    def page0(self):        ####################### inicio
         self.canvasS.get_tk_widget().pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
 
@@ -67,7 +69,7 @@ class Pages():
         self.page1btn.pack(fill=Tk.BOTH, expand=1)
         self.page1btn_clase.pack(fill=Tk.BOTH, expand=1)
 
-    def page1(self):          ################### notas por estudiante 
+    def page1(self):          #################### notas por estudiante 
         self.canvasS.get_tk_widget().pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
 
@@ -82,10 +84,12 @@ class Pages():
         self.page2btnM.pack(fill=Tk.BOTH, expand=1)  # plot boton de notas de matematicas
         self.page2btnC.pack(fill=Tk.BOTH, expand=1)  # plot boton de notas de ciencias
         
-    def page1_clase(self):    ################### notas por clase        
+    def page1_clase(self):    #################### notas por clase        
         self.canvasS.get_tk_widget().pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
-     
+        self.canvasM.get_tk_widget().pack_forget()
+        self.canvasC.get_tk_widget().pack_forget()
+        
         self.page1btn.pack_forget()
         self.page1btn_clase.pack_forget()
 
@@ -94,18 +98,23 @@ class Pages():
         self.page0btn.pack(side=Tk.LEFT, fill=Tk.BOTH, expand=1)   # hacia pagina de inicio
         self.canvas_clase.get_tk_widget().pack(fill=Tk.BOTH, expand=1) 
         
-    def pageE(self):        
+    def pageE(self):         # promedios de español
         self.page1btn.pack_forget()
-        self.canvasS.get_tk_widget().pack_forget()
+        self.canvasE.get_tk_widget().pack_forget()
+        self.canvasM.get_tk_widget().pack_forget()
+        self.canvasC.get_tk_widget().pack_forget()
         self.canvas_clase.get_tk_widget().pack_forget()
 
         self.back.pack()
         root.title("Notas de español promediadas por estudiante")
         self.canvasE.get_tk_widget().pack(fill=Tk.BOTH, expand=1)       
         self.page0btn.pack(side=Tk.LEFT, fill=Tk.BOTH, expand=1)   # hacia pagina de inicio
-    def pageS(self):        
+
+    def pageS(self):         # promedios de sociales
         self.page1btn.pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
+        self.canvasM.get_tk_widget().pack_forget()
+        self.canvasC.get_tk_widget().pack_forget()
         self.canvas_clase.get_tk_widget().pack_forget()
 
         self.back.pack()
@@ -113,7 +122,7 @@ class Pages():
         self.canvasS.get_tk_widget().pack(fill=Tk.BOTH, expand=1)       
         self.page0btn.pack(side=Tk.LEFT, fill=Tk.BOTH, expand=1)   # hacia pagina de inicio
 
-    def pageM(self):        
+    def pageM(self):         # promedios de matematics
         self.page1btn.pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
         self.canvasS.get_tk_widget().pack_forget()
@@ -125,7 +134,7 @@ class Pages():
         self.canvasM.get_tk_widget().pack(fill=Tk.BOTH, expand=1)       
         self.page0btn.pack(side=Tk.LEFT, fill=Tk.BOTH, expand=1)   # hacia pagina de inicio
         
-    def pageC(self):        
+    def pageC(self):        # promedios de ciencias
         self.page1btn.pack_forget()
         self.canvasE.get_tk_widget().pack_forget()
         self.canvasS.get_tk_widget().pack_forget()
@@ -184,10 +193,15 @@ for i in range(len(data)):
 prom_clase = [prom_sociales/len(data), prom_espa_ol/len(data), prom_mate/len(data), prom_ciencias/len(data)] # promedios por materia
 
 
+print(" notas de sociales    : ")
 print(notas_sociales)
+print("\n notas de español     : ")
 print(notas_espa_ol)
+print("\n notas de matematicas : ")
 print(notas_mate)
+print("\n notas de ciencias    : ")
 print(notas_ciencias)  
+print("\n promedios de cada materia :")
 print(prom_clase)
 
 # Otros parametros
@@ -200,7 +214,7 @@ root = Tk.Tk()
 back = Tk.Frame(master=root, width=500, height=500, bg='black')
 
 
-# graficos de barras
+# los diferentes graficos de barras
 canvasS = Canvas(root, notas_sociales, nombres, ind, width).canvas
 canvasE = Canvas(root, notas_espa_ol, nombres, ind, width).canvas
 canvasM = Canvas(root, notas_mate, nombres, ind, width).canvas
